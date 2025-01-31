@@ -32,32 +32,20 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
-
-int	key_hook(int keycode, t_vars *vars)
-{
-	printf("Hello from key_hook!\n");
-	return (0);
-}
-
 int	main()
 {
-
-	t_vars	vars;
+	void	*mlx;
+	void	*mlx_win;
 	t_data	img;
 	t_data	img2;
 
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 900, 700, "Hello world!");
-	img.img = mlx_xpm_file_to_image(vars.mlx, "/home/edelanno/42-So_long/images/santa_R.xpm", &img.width, &img.height);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	img2.img2 = mlx_xpm_file_to_image(vars.mlx, "/home/edelanno/42-So_long/images/wall1.xpm",&img.width, &img.height);
-	mlx_put_image_to_window(vars.mlx, vars.win, img2.img2,80,0);
-	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_loop(vars.mlx);
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 900, 700, "Hello world!");
+	img.img = mlx_xpm_file_to_image(mlx, "/home/edelanno/42-So_long/images/wall1.xpm", &img.width, &img.height);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	img2.img2 = mlx_xpm_file_to_image(mlx, "/home/edelanno/42-So_long/images/wall1.xpm",&img.width, &img.height);
+	mlx_put_image_to_window(mlx, mlx_win, img2.img2,80,0);
+	mlx_loop(mlx);
 
 
 
