@@ -14,6 +14,8 @@
 # define SO_LONG_H
 
 typedef struct	s_img {
+	int		prev_keycode_LR;
+	int		prev_keycode;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -26,20 +28,22 @@ typedef struct	s_img {
 typedef	enum	e_key {
 
 	D_right = 100,
-	A_left = 97,
-	W_top = 119,
-	S_bottom = 115,
+	A_top = 97,
+	W_bottom = 119,
+	S_left = 115,
 	ESC = 65307
 }				t_key;
 
-typedef struct s_santa {
+typedef struct s_player {
 	int	x;
 	int	y;
-}				t_santa;
+}				t_player;
 
 typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
+	void		*mlx;
+	void		*win;
+	t_img		*img;
+	t_player	*santa;
 }				t_vars;
 
 # endif

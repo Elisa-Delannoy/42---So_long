@@ -16,52 +16,76 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	init_santa(t_santa *santa)
+int	init_santa(t_vars *vars)
 {
-	santa->x = 0;
-	santa->y = 0;
-}
-
-int	key_hook(int keycode, t_santa *santa)
-{
-
-	if (keycode == D_right)
-		santa->x = santa->x + 80;
-	if (keycode == A_left)
-		santa->x = santa->x - 80;
-	if (keycode == W_top)
-		santa->y = santa->y + 80;
-	if (keycode == S_bottom)
-		santa->y = santa->y - 80;
-	printf("x = %d\n", santa->x);
-	printf("y = %d\n", santa->y);
-	// mlx_clear_window(vars.mlx, vars.win);
-	// mlx_put_image_to_window(vars->mlx, vars->win, img.img, santa->x, santa->y);
+	vars->santa = malloc(sizeof(t_player));
+	if (!vars->santa)
+		return (1);
+	vars->santa->x = 0;
+	vars->santa->y = 0;
+	vars->img->prev_keycode = D_right; /*init vars pas init santa  et voir s il faut aussi malloc vars*/
+	vars->img->prev_keycode_LR = D_right; /*init vars pas init santa et voir s il faut aussi malloc vars*/
 	return (0);
 }
 
+void	img_new_event(int keycode, t_vars *vars)
+{
+	if (keycode == D_right)
+		vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_R.xpm", &vars->img->width, &vars->img->height);
+	if (keycode == S_left)
+		vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_L.xpm", &vars->img->width, &vars->img->height);
+	if (keycode == A_top)
+	{
+		/*refaire une image : si left, top left*/
+		// if (vars->img->prev_keycode == S_left || (vars->img->prev_keycode == W_bottom && vars->img->prev_keycode_LR == S_left))
+		// 	image top left
+		vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_T.xpm", &vars->img->width, &vars->img->height);
+	}
+	if (keycode == W_bottom)
+	{
+		if (vars->img->prev_keycode_LR == D_right) 
+			vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_R.xpm", &vars->img->width, &vars->img->height);
+		else
+			vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_L.xpm", &vars->img->width, &vars->img->height);
+	}
+	mlx_clear_window(vars->mlx, vars->win);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, vars->santa->x, vars->santa->y);
+}
+
+int	key_hook(int keycode, t_vars *vars)
+{
+	if (keycode == D_right)
+	{
+		vars->santa->x += 80;
+		vars->img->prev_keycode_LR = D_right;
+	}
+	if (keycode == S_left)
+	{
+		vars->santa->x -= 80;
+		vars->img->prev_keycode_LR = S_left;
+	}
+	if (keycode == A_top)
+		vars->santa->y -= 80;
+	if (keycode == W_bottom)
+		vars->santa->y += 80;
+	if (keycode == ESC)
+		mlx_destroy_window(vars->mlx, vars->win);  /*voir pour les free*/
+	vars->img->prev_keycode = keycode;
+	img_new_event(keycode, vars);
+	return (0);
+}
 int	main()
 {
-	t_img	img;
-	// t_data	img2;
-	t_vars	vars;
-	t_santa	*santa;
+	t_vars		vars;
 
-	santa = NULL;
-	santa = malloc(sizeof(t_santa));
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello world!");
-	init_santa(santa);
-	printf("x = %d\n", santa->x);
-	printf("y = %d\n", santa->y);
-	img.img = mlx_xpm_file_to_image(vars.mlx, "./images/santa_R.xpm", &img.width, &img.height);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, santa->x, santa->y);
-	// img2.img2 = mlx_xpm_file_to_image(vars.mlx, "./images/wall1.xpm",&img.width, &img.height);
-	// mlx_put_image_to_window(vars.mlx, vars.win, img2.img2,100,100);
+	if (init_santa(&vars) == 1)
+		return (1);
+	vars.win = mlx_new_window(vars.mlx, 640, 480, "Santa!");
+	vars.img->img = mlx_xpm_file_to_image(vars.mlx, "./images/santa_R.xpm", &vars.img->width, &vars.img->height);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.img->img, vars.santa->x, vars.santa->y);
 	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_loop(vars.mlx);
-
-
-
+	free (vars.santa);
 }
 
