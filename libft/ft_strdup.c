@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:17:50 by edelanno          #+#    #+#             */
-/*   Updated: 2024/11/08 13:17:51 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:36:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	while (s[i])
 	{
+		// if (s[i] == '\n')
+		// {
+		// 	new[i] = '\0';
+		// 	return (new);
+		// }
 		new[i] = s[i];
 		i++;
 	}

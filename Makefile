@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edelanno <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/30 11:33:24 by edelanno          #+#    #+#              #
-#    Updated: 2025/01/30 11:33:25 by edelanno         ###   ########.fr        #
+#    Updated: 2025/02/10 17:21:38 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MINILIBX_DIR = mlx_linux
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long
-SRC = main.c
+SRC = main.c get_next_line.c get_next_line_utils.c parse.c
 OBJ = $(SRC:.c=.o)
 
 # SRCBONUS = main_bonus.c

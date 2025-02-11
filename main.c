@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:30:05 by edelanno          #+#    #+#             */
-/*   Updated: 2025/01/30 11:30:06 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:54:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_linux/mlx.h"
 #include "so_long.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 int	init_santa(t_vars *vars)
 {
@@ -74,18 +70,25 @@ int	key_hook(int keycode, t_vars *vars)
 	img_new_event(keycode, vars);
 	return (0);
 }
-int	main()
+int	main(int argc, char **argv)
 {
-	t_vars		vars;
+	// t_vars		vars;
+	t_map	map;
+	(void)	argc;
+	
+	check_rectangular(argv, &map);
 
-	vars.mlx = mlx_init();
-	if (init_santa(&vars) == 1)
-		return (1);
-	vars.win = mlx_new_window(vars.mlx, 640, 480, "Santa!");
-	vars.img->img = mlx_xpm_file_to_image(vars.mlx, "./images/santa_R.xpm", &vars.img->width, &vars.img->height);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img->img, vars.santa->x, vars.santa->y);
-	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_loop(vars.mlx);
-	free (vars.santa);
+	
+	// vars.mlx = mlx_init();
+	// if (init_santa(&vars) == 1)
+	// 	return (1);
+	// vars.win = mlx_new_window(vars.mlx, 640, 480, "Santa!");
+	// vars.img->img = mlx_xpm_file_to_image(vars.mlx, "./images/santa_R.xpm", &vars.img->width, &vars.img->height);
+	// mlx_put_image_to_window(vars.mlx, vars.win, vars.img->img, vars.santa->x, vars.santa->y);
+	// mlx_key_hook(vars.win, key_hook, &vars);
+	// mlx_loop(vars.mlx);
+	// free (vars.santa);
+	
+	return (0);
 }
 
