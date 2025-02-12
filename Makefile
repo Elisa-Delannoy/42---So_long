@@ -18,7 +18,7 @@ MINILIBX_DIR = mlx_linux
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long
-SRC = main.c get_next_line.c get_next_line_utils.c parse.c
+SRC = main.c get_next_line.c get_next_line_utils.c parse.c parse2.c printmap.c
 OBJ = $(SRC:.c=.o)
 
 # SRCBONUS = main_bonus.c

@@ -32,23 +32,22 @@
 #include <fcntl.h>
 
 typedef struct	s_img {
-	int		prev_keycode_LR;
-	int		prev_keycode;
+
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
-	int     width;
-    int     height;
+	int		width;
+	int		height;
 	int		endian;
 }				t_img;
 
 typedef	enum	e_key {
 
 	D_right = 100,
-	A_left = 115,
-	W_top = 97,
-	S_bottom = 119,
+	A_left = 97,
+	W_top = 119,
+	S_bottom = 115,
 	ESC = 65307
 }				t_key;
 
@@ -65,20 +64,35 @@ typedef struct s_map {
 	int		e;
 	int		p;
 	int		c;
+	char	**tab;
+	size_t	height;
+	size_t	width;
 }				t_map;
 
 typedef struct	s_vars {
+	int			prev_keycode_LR;
+	int			prev_keycode;
 	void		*mlx;
 	void		*win;
+	t_map		*map;
 	t_img		*img;
 	t_player	*santa;
+	t_img		*BG;
+	t_img		*player;
+	t_img		*collect;
+	t_img		*exit;
+	t_img		*wall;
 }				t_vars;
 
 
 t_list	*open_read(char **argv);
 char	**stock_map_tab(char **argv);
-char	**check_rectangular(char **argv, t_map *map);
-void	check_map(t_map *map, char **tab);
+char	**check_rectangular(char **argv, t_map *map, t_vars *vars);
+void	check_map(t_map *map, t_vars *vars);
+size_t	map_height(t_map *map);
+int		key_hook(int keycode, t_vars *vars);
+int		init_santa(t_vars *vars);
+void	print_map(t_map *map, t_vars *vars);
 
 /*voir comment ajouter le dossier gnl dans Makefile ou voir pour modifier les fonctions de la libft*/
 char	*get_next_line(int fd);

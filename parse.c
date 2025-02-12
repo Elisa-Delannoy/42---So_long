@@ -50,19 +50,6 @@ t_list	*open_read(char **argv)
 	return (map);
 }
 
-void	free_tab(int size, char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
 char	**stock_map_tab(char **argv)
 {
 	t_list		*map;
@@ -90,129 +77,24 @@ char	**stock_map_tab(char **argv)
 	return (tab);
 }
 
-size_t	map_width(char **tab)
+size_t	map_height(t_map *map)
 {
-	size_t	i;
+	map->width = ft_strlen(map->tab[0]) - 1;
+	map->height = 0;
+	while (map->tab[map->height])
+		map->height++;
+	return (map->height);
+}
+
+void	free_tab(int size, char **tab)
+{
+	int	i;
 
 	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-int	check_way(t_map *map, char **tab, size_t x, size_t y)
-{
-	// printf("c%d\n", map->c);
-	// printf("e%d\n", map->e);
-	// if (x > map_width(tab) || y > ft_strlen(tab[0]))
-	// 	return ;
-	if ((ft_strchr("1", tab[x][y]) != NULL))
-		return (1);
-	if ((ft_strchr("E", tab[x][y]) != NULL))
-		map->e--;
-	if ((ft_strchr("C", tab[x][y]) != NULL))
-		map->c--;
-	tab[x][y] = '1';
-	check_way(map, tab, x + 1, y);
-	check_way(map, tab, x - 1, y);
-	check_way(map, tab, x, y + 1);
-	check_way(map, tab, x, y - 1);
-	if (map->e != 0 && map->c != 0)
-		return (2);
-	return (0);
-}
-
-void	check_P_pos(t_map *map, char **tab)
-{
-	size_t	x;
-	size_t	y;
-
-	x = 0;
-	y = 0;
-	map->i = 0;
-	map->j = 0;
-	while (tab[map->i] && ft_strchr("P", tab[map->i][map->j]) == NULL)
+	while (i < size)
 	{
-		if (tab[map->i][map->j + 1])
-			map->j++;
-		else
-		{
-			map->j = 0;
-			map->i++;
-		}
-	}
-	if (ft_strchr("P", tab[map->i][map->j]) != NULL)
-	{
-		x = map->i;
-		y = map->j;
-	}
-	if (check_way(map, tab, x, y) == 2)
-		return (perror("impossible way"));
-}
-
-int	parse_map(t_map *map, char **tab)
-{
-	if (map->i == 0 || map->i == map_width(tab) || map->j == 0 || map->j == ft_strlen(tab[map->i]) - 1)
-	{
-		if (ft_strchr("1", tab[map->i][map->j]) == NULL)
-			return (perror("must be wall"), 1);
-	}
-	else
-	{
-		if (ft_strchr("01CEP", tab[map->i][map->j]) == NULL)
-			return (perror("map must be 0, 1, C, E or P"), 1);
-	}
-	return (0);
-}
-
-void	check_map(t_map *map, char **tab)
-{
-	map->i = -1;
-	map->e = 0;
-	map->p = 0;
-	map->c = 0;
-	while (tab[++(map->i)])
-	{
-		map->j = -1;
-		while (tab[map->i][++(map->j)])
-		{
-			if (ft_strchr("E", tab[map->i][map->j]) != NULL)
-				map->e++;
-			if (ft_strchr("P", tab[map->i][map->j]) != NULL)
-				map->p++;
-			if (ft_strchr("C", tab[map->i][map->j]) != NULL)
-				map->c++;
-			if (map->e > 1 || map->p > 1)
-				return (perror("must have only 1 exit E and 1 player P"));
-			if (parse_map(map, tab) == 1)
-				return ;
-		}
-	}
-	if (map->c < 1 || map->e < 1 || map->p < 1)
-		return (perror("must have 1 exit, 1 player and least 1 collectible C"));
-	check_P_pos(map, tab);
-}
-
-char	**check_rectangular(char **argv, t_map *map)
-{
-	char	**tab;
-	int		i;
-	int		j;
-	int		k;
-
-	tab = stock_map_tab(argv);
-	i = 0;
-	j = ft_strlen(tab[i]);
-	while (tab[i])
-	{
-		k = ft_strlen(tab[i]);
-		if (k != j)
-			return (perror("map's must be rectangular"), NULL);
+		free(tab[i]);
 		i++;
 	}
-	if (i == j)
-		return (perror("map's must be rectangular not square"), NULL); /*voir si ok carre ou non*/
-	check_map(map, tab);
-	return (tab);	
+	free(tab);
 }
-
