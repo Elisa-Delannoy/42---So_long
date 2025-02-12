@@ -46,9 +46,9 @@ typedef struct	s_img {
 typedef	enum	e_key {
 
 	D_right = 100,
-	A_top = 97,
-	W_bottom = 119,
-	S_left = 115,
+	A_left = 115,
+	W_top = 97,
+	S_bottom = 119,
 	ESC = 65307
 }				t_key;
 
@@ -56,6 +56,8 @@ typedef struct s_player {
 	int	x;
 	int	y;
 }				t_player;
+
+
 
 typedef struct s_map {
 	size_t	i;

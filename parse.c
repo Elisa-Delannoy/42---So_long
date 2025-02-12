@@ -100,6 +100,56 @@ size_t	map_width(char **tab)
 	return (i);
 }
 
+int	check_way(t_map *map, char **tab, size_t x, size_t y)
+{
+	// printf("c%d\n", map->c);
+	// printf("e%d\n", map->e);
+	// if (x > map_width(tab) || y > ft_strlen(tab[0]))
+	// 	return ;
+	if ((ft_strchr("1", tab[x][y]) != NULL))
+		return (1);
+	if ((ft_strchr("E", tab[x][y]) != NULL))
+		map->e--;
+	if ((ft_strchr("C", tab[x][y]) != NULL))
+		map->c--;
+	tab[x][y] = '1';
+	check_way(map, tab, x + 1, y);
+	check_way(map, tab, x - 1, y);
+	check_way(map, tab, x, y + 1);
+	check_way(map, tab, x, y - 1);
+	if (map->e != 0 && map->c != 0)
+		return (2);
+	return (0);
+}
+
+void	check_P_pos(t_map *map, char **tab)
+{
+	size_t	x;
+	size_t	y;
+
+	x = 0;
+	y = 0;
+	map->i = 0;
+	map->j = 0;
+	while (tab[map->i] && ft_strchr("P", tab[map->i][map->j]) == NULL)
+	{
+		if (tab[map->i][map->j + 1])
+			map->j++;
+		else
+		{
+			map->j = 0;
+			map->i++;
+		}
+	}
+	if (ft_strchr("P", tab[map->i][map->j]) != NULL)
+	{
+		x = map->i;
+		y = map->j;
+	}
+	if (check_way(map, tab, x, y) == 2)
+		return (perror("impossible way"));
+}
+
 int	parse_map(t_map *map, char **tab)
 {
 	if (map->i == 0 || map->i == map_width(tab) || map->j == 0 || map->j == ft_strlen(tab[map->i]) - 1)
@@ -138,8 +188,9 @@ void	check_map(t_map *map, char **tab)
 				return ;
 		}
 	}
-	if (map->c < 1)
-		return (perror("must have at least 1 exit collectible C"));
+	if (map->c < 1 || map->e < 1 || map->p < 1)
+		return (perror("must have 1 exit, 1 player and least 1 collectible C"));
+	check_P_pos(map, tab);
 }
 
 char	**check_rectangular(char **argv, t_map *map)

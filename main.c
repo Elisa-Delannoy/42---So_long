@@ -28,16 +28,16 @@ void	img_new_event(int keycode, t_vars *vars)
 {
 	if (keycode == D_right)
 		vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_R.xpm", &vars->img->width, &vars->img->height);
-	if (keycode == S_left)
+	if (keycode == A_left)
 		vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_L.xpm", &vars->img->width, &vars->img->height);
-	if (keycode == A_top)
+	if (keycode == W_top)
 	{
 		/*refaire une image : si left, top left*/
 		// if (vars->img->prev_keycode == S_left || (vars->img->prev_keycode == W_bottom && vars->img->prev_keycode_LR == S_left))
 		// 	image top left
 		vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_T.xpm", &vars->img->width, &vars->img->height);
 	}
-	if (keycode == W_bottom)
+	if (keycode == S_bottom)
 	{
 		if (vars->img->prev_keycode_LR == D_right) 
 			vars->img->img = mlx_xpm_file_to_image(vars->mlx, "./images/santa_R.xpm", &vars->img->width, &vars->img->height);
@@ -55,14 +55,14 @@ int	key_hook(int keycode, t_vars *vars)
 		vars->santa->x += 80;
 		vars->img->prev_keycode_LR = D_right;
 	}
-	if (keycode == S_left)
+	if (keycode == A_left)
 	{
 		vars->santa->x -= 80;
-		vars->img->prev_keycode_LR = S_left;
+		vars->img->prev_keycode_LR = A_left;
 	}
-	if (keycode == A_top)
+	if (keycode == W_top)
 		vars->santa->y -= 80;
-	if (keycode == W_bottom)
+	if (keycode == S_bottom)
 		vars->santa->y += 80;
 	if (keycode == ESC)
 		mlx_destroy_window(vars->mlx, vars->win);  /*voir pour les free*/
