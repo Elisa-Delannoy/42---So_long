@@ -77,13 +77,13 @@ char	**stock_map_tab(char **argv)
 	return (tab);
 }
 
-size_t	map_height(t_map *map)
+size_t	map_height(t_vars *vars)
 {
-	map->width = ft_strlen(map->tab[0]) - 1;
-	map->height = 0;
-	while (map->tab[map->height])
-		map->height++;
-	return (map->height);
+	vars->map->width = ft_strlen(vars->map->tab[0]) - 1;
+	vars->map->height = 0;
+	while (vars->map->tab[vars->map->height])
+		vars->map->height++;
+	return (vars->map->height);
 }
 
 void	free_tab(int size, char **tab)

@@ -71,7 +71,6 @@ typedef struct s_map {
 
 typedef struct	s_vars {
 	int			prev_keycode_LR;
-	int			prev_keycode;
 	void		*mlx;
 	void		*win;
 	t_map		*map;
@@ -82,17 +81,18 @@ typedef struct	s_vars {
 	t_img		*collect;
 	t_img		*exit;
 	t_img		*wall;
+	t_img		*wallin;
 }				t_vars;
 
 
 t_list	*open_read(char **argv);
 char	**stock_map_tab(char **argv);
-char	**check_rectangular(char **argv, t_map *map, t_vars *vars);
-void	check_map(t_map *map, t_vars *vars);
-size_t	map_height(t_map *map);
+char	**check_rectangular(char **argv, t_vars *vars);
+void	check_map(t_vars *vars);
+size_t	map_height(t_vars *vars);
 int		key_hook(int keycode, t_vars *vars);
 int		init_santa(t_vars *vars);
-void	print_map(t_map *map, t_vars *vars);
+void	print_map(t_vars *vars);
 
 /*voir comment ajouter le dossier gnl dans Makefile ou voir pour modifier les fonctions de la libft*/
 char	*get_next_line(int fd);
