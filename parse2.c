@@ -40,7 +40,6 @@ int	check_way(t_vars *vars, size_t x, size_t y, char **cpy)
 	if ((ft_strchr("E", cpy[x][y]) != NULL))
 		vars->map->e--;
 	if ((ft_strchr("C", cpy[x][y]) != NULL))
-		// vars->map->c--;
 		count++;
 	cpy[x][y] = '1';
 	check_way(vars, x + 1, y, cpy);
@@ -117,6 +116,7 @@ void	check_map(t_vars *vars)
 	}
 	if (vars->map->c < 1 || vars->map->e < 1 || vars->map->p < 1)
 		return (perror("must have 1 exit, 1 player and least 1 collectible C"), exit (1));
+	vars->map->c2 = vars->map->c / 2;
 	check_P_pos(vars);
 }
 

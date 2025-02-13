@@ -64,6 +64,7 @@ typedef struct s_map {
 	int		e;
 	int		p;
 	int		c;
+	int		c2;
 	char	**tab;
 	size_t	height;
 	size_t	width;
@@ -79,9 +80,10 @@ typedef struct	s_vars {
 	t_img		*BG;
 	t_img		*player;
 	t_img		*collect;
-	t_img		*exit;
+	t_img		exit[3];
 	t_img		*wall;
 	t_img		*wallin;
+	t_player	mapexit;
 }				t_vars;
 
 
