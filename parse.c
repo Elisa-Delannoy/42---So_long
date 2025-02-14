@@ -77,25 +77,25 @@ char	**stock_map_tab(char **argv)
 	return (tab);
 }
 
-size_t	map_height(t_var *var)
+int	check_rectangular(char **argv, t_var *var)
 {
-	var->map->width = ft_strlen(var->map->tab[0]) - 1;
-	var->map->height = 0;
-	while (var->map->tab[var->map->height])
-		var->map->height++;
-	return (var->map->height);
-}
+	int		i;
+	int		j;
+	int		k;
 
-void	free_tab(t_var *var, char **tab)
-{
-	size_t	i;
-
-	map_height(var);
+	if (check_name(argv) == 1)
+		return (1);
+	var->map->tab = stock_map_tab(argv);
 	i = 0;
-	while (i < var->map->height)
+	j = ft_strlen(var->map->tab[i]);
+	while (var->map->tab[i])
 	{
-		free(tab[i]);
+		k = ft_strlen(var->map->tab[i]);
+		if (k != j)
+			return (ft_putstr_fd("map's must be rectangular\n", 2), 1);
 		i++;
 	}
-	free(tab);
+	if (check_map(var) == 1)
+		free_tab(var, var->map->tab);
+	return (0);
 }

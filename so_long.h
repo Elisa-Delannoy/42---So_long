@@ -68,6 +68,7 @@ typedef struct s_map {
 	size_t	height;
 	size_t	width;
 	int		count;
+	int		move;
 }				t_map;
 
 typedef struct	s_var {
