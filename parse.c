@@ -18,9 +18,9 @@ int	check_name(char **argv)
 
 	name = ft_strrchr(argv[1], '.');
 	if (name == NULL)
-		return (perror("map's name must end with .ber"), 1);
+		return (ft_putstr_fd("map's name must end with .ber\n", 2), 1);
 	if (ft_strncmp(".ber", name, 4) != 0)
-		return (perror("map's name must end with .ber"), 1);
+		return (ft_putstr_fd("map's name must end with .ber\n", 2), 1);
 	return (0);
 }
 
@@ -86,12 +86,13 @@ size_t	map_height(t_var *var)
 	return (var->map->height);
 }
 
-void	free_tab(int size, char **tab)
+void	free_tab(t_var *var, char **tab)
 {
-	int	i;
+	size_t	i;
 
+	map_height(var);
 	i = 0;
-	while (i < size)
+	while (i < var->map->height)
 	{
 		free(tab[i]);
 		i++;

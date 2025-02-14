@@ -88,13 +88,15 @@ typedef struct	s_var {
 
 t_list	*open_read(char **argv);
 char	**stock_map_tab(char **argv);
-char	**check_rectangular(char **argv, t_var *var);
-void	check_map(t_var *var);
+int		check_rectangular(char **argv, t_var *var);
+int		check_name(char **argv);
+int		check_map(t_var *var);
 size_t	map_height(t_var *var);
 int		key_hook(int keycode, t_var *var);
 int		init_santa(t_var *var);
 int		print_map(t_var *var);
 int		exit_game(t_var *var);
+void	free_tab(t_var *var, char **tab);
 
 /*voir comment ajouter le dossier gnl dans Makefile ou voir pour modifier les fonctions de la libft*/
 char	*get_next_line(int fd);
