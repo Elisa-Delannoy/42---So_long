@@ -15,26 +15,28 @@
 
 int	main(int argc, char **argv)
 {
-	t_vars		vars;
+	t_var		var;
 	// t_map	map;
 	(void)	argc;
 
 
-	vars.mlx = mlx_init();
-	if (init_santa(&vars) == 1)
+	var.mlx = mlx_init();
+	if (init_santa(&var) == 1)
 		return (1);
-	vars.map = malloc(sizeof(t_map));
-	if (vars.map == NULL)
+	var.map = malloc(sizeof(t_map));
+	if (var.map == NULL)
 		return (1);
-	check_rectangular(argv, &vars);
-	vars.win = mlx_new_window(vars.mlx, 80 * (vars.map->width + 1), 80 * vars.map->height, "Santa!");
-	print_map(&vars);
-	// vars.img->img = mlx_xpm_file_to_image(vars.mlx, "./images/santa_R.xpm", &vars.img->width, &vars.img->height);
-	// mlx_put_image_to_window(vars.mlx, vars.win, vars.img->img, vars.santa->x, vars.santa->y);
-	// printf("tab = %c\n", vars.map->tab[3][1]);
-	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_loop(vars.mlx);
-	free (vars.santa);
+	var.map->count = 0;
+	check_rectangular(argv, &var);
+	var.win = mlx_new_window(var.mlx, 80 * (var.map->width + 1), 80 * (var.map->height), "Santa!");
+	mlx_expose_hook(var.win, print_map, &var);
+	// var.img->img = mlx_xpm_file_to_image(var.mlx, "./images/santa_R.xpm", &var.img->width, &var.img->height);
+	// mlx_put_image_to_window(var.mlx, var.win, var.img->img, var.santa->x, var.santa->y);
+	// printf("tab = %c\n", var.map->tab[3][1]);
+	mlx_key_hook(var.win, key_hook, &var);
+	mlx_hook(var.win, DestroyNotify, KeyReleaseMask, exit_game, &var);
+	mlx_loop(var.mlx);
+	free (var.santa);
 	
 	return (0);
 }

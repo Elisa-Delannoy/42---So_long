@@ -24,6 +24,8 @@
 
 #include "mlx_linux/mlx.h"
 #include "libft/libft.h"
+#include <X11/X.h>
+#include <X11/keysym.h>
 #include <stddef.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -31,15 +33,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+
 typedef struct	s_img {
 
 	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
 	int		width;
 	int		height;
-	int		endian;
 }				t_img;
 
 typedef	enum	e_key {
@@ -68,33 +67,34 @@ typedef struct s_map {
 	char	**tab;
 	size_t	height;
 	size_t	width;
+	int		count;
 }				t_map;
 
-typedef struct	s_vars {
+typedef struct	s_var {
 	int			prev_keycode_LR;
 	void		*mlx;
 	void		*win;
 	t_map		*map;
 	t_img		*img;
 	t_player	*santa;
-	t_img		*BG;
-	t_img		*player;
-	t_img		*collect;
+	t_img		BG;
+	t_img		p[6];
+	t_img		collect;
 	t_img		exit[3];
-	t_img		*wall;
-	t_img		*wallin;
+	t_img		wall[2];
 	t_player	mapexit;
-}				t_vars;
+}				t_var;
 
 
 t_list	*open_read(char **argv);
 char	**stock_map_tab(char **argv);
-char	**check_rectangular(char **argv, t_vars *vars);
-void	check_map(t_vars *vars);
-size_t	map_height(t_vars *vars);
-int		key_hook(int keycode, t_vars *vars);
-int		init_santa(t_vars *vars);
-void	print_map(t_vars *vars);
+char	**check_rectangular(char **argv, t_var *var);
+void	check_map(t_var *var);
+size_t	map_height(t_var *var);
+int		key_hook(int keycode, t_var *var);
+int		init_santa(t_var *var);
+int		print_map(t_var *var);
+int		exit_game(t_var *var);
 
 /*voir comment ajouter le dossier gnl dans Makefile ou voir pour modifier les fonctions de la libft*/
 char	*get_next_line(int fd);
