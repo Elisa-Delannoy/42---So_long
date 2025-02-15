@@ -24,16 +24,61 @@ int	check_name(char **argv)
 	return (0);
 }
 
+// int	open_read(char **argv)
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*line;
+	
+// 	i = 0;
+// 	fd = open(argv[1], O_RDONLY);
+// 	line = get_next_line(fd);
+// 	while (line != NULL)
+// 	{
+// 		i++;
+// 		line = get_next_line(fd);
+// 	}
+// 	free(line);
+// 	get_next_line(42);
+// 	return (i);
+// }
+// char	**stock_map_tab(char **argv)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	char	**tab;
+// 	int		i;
+
+// 	fd = open(argv[1], O_RDONLY);
+// 	tab = malloc((open_read(argv) + 1) * sizeof(char *));
+// 	if (tab == NULL)
+// 		return (NULL);
+// 	line = get_next_line(fd);
+// 	i = 0;
+// 	while (line != NULL)
+// 	{
+// 		if (line[ft_strlen(line) - 1] == '\n')
+// 			line[ft_strlen(line) - 1] = '\0';
+// 		if (line[ft_strlen(line) - 1] == '\r')
+// 			line[ft_strlen(line) - 1] = '\0';
+// 		tab[i] = line;
+// 		line = get_next_line(fd);
+// 		i++;
+// 	}
+// 	get_next_line(42);
+// 	tab[i] = NULL;
+// 	free(line);
+// 	return (tab);
+// }
+
 t_list	*open_read(char **argv)
 {
 	int		fd;
 	char	*line;
 	t_list	*map_line;
 	t_list	*map;
-
+	
 	map = NULL;
-	if (check_name(argv) != 0)
-		return (NULL);
 	fd = open(argv[1], O_RDONLY);
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -52,27 +97,29 @@ t_list	*open_read(char **argv)
 
 char	**stock_map_tab(char **argv)
 {
-	t_list		*map;
+	t_list		* map;
 	t_list		*temp;
 	char		**tab;
 	int			i;
-	int			size;
 
 	map = open_read(argv);
+	if (!map)
+        return (NULL);
 	temp = map;
-	size = ft_lstsize(map);
-	tab = (char **) malloc((size + 1) * sizeof(char *));
+	tab = malloc(sizeof(char *) * (ft_lstsize(map) + 1));
 	if (tab == NULL)
+	{
+		ft_lstclear(&map, free);
 		return (NULL);
+	}
 	i = 0;
-	while (i < size)
+	while (temp)
 	{
 		tab[i] = ft_strdup((char *)temp->content);
 		i++;
 		temp = temp->next;
 	}
 	tab[i] = NULL;
-	// free_tab(size, tab);
 	ft_lstclear(&map, free);
 	return (tab);
 }
@@ -86,6 +133,8 @@ int	check_rectangular(char **argv, t_var *var)
 	if (check_name(argv) == 1)
 		return (1);
 	var->map->tab = stock_map_tab(argv);
+	if (!var->map->tab)
+		return (1);
 	i = 0;
 	j = ft_strlen(var->map->tab[i]);
 	while (var->map->tab[i])

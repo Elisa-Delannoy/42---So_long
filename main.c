@@ -18,46 +18,79 @@ int	init_map(t_var *var)
 	var->map = malloc(sizeof(t_map));
 	if (var->map == NULL)
 		return (1);
+	var->map->i = 0;
+	var->map->j = 0;
+	var->map->e = 0;
+	var->map->p = 0;
+	var->map->c = 0;
+	var->map->c2 = 0;
+	var->map->tab = NULL;
+	var->map->height  = 80;
+	var->map->width = 80;
 	var->map->count = 0;
 	var->map->move = 0;
+	var->map->printmove = "0";
 	return (0);
+}
+
+void	init_var(t_var *var)
+{
+	int	i;
+
+	var->prev_keycode_LR = D_right;
+	var->BG.img = NULL;
+	i = -1;
+	while (++i <= 6)
+		var->p[i].img = NULL;
+	var->collect.img = NULL;
+	i = -1;
+	while (++i <= 3)
+		var->exit[i].img = NULL;
+	i = -1;
+	while (++i <= 2)
+		var->wall[i].img = NULL;
+
+	// var.mapexit.x = 0;
+	// var.mapexit.y = 0;
 }
 
 void	free_img(t_var *var)
 {
+	int	i;
+
 	if (var->collect.img)
 		mlx_destroy_image(var->mlx, var->collect.img);
-	if (var->exit[0].img )
-		mlx_destroy_image(var->mlx, var->exit[0].img);
-	if (var->exit[1].img)
-		mlx_destroy_image(var->mlx, var->exit[1].img);
-	if (var->exit[2].img)
-		mlx_destroy_image(var->mlx, var->exit[2].img);
+	i = -1;
+	while (++i <= 3)
+	{
+		if (var->exit[i].img )
+			mlx_destroy_image(var->mlx, var->exit[i].img);
+	}
 	if (var->wall[0].img)
 		mlx_destroy_image(var->mlx, var->wall[0].img);
 	if (var->wall[1].img)
 		mlx_destroy_image(var->mlx, var->wall[1].img);
 	if (var->BG.img)
 		mlx_destroy_image(var->mlx, var->BG.img);
-	if (var->p[0].img)
-		mlx_destroy_image(var->mlx, var->p[0].img);
-	if (var->p[1].img)
-		mlx_destroy_image(var->mlx, var->p[1].img);
-	if (var->p[2].img)
-		mlx_destroy_image(var->mlx, var->p[2].img);;
-	if (var->p[3].img)
-		mlx_destroy_image(var->mlx, var->p[3].img);;
-	if (var->p[4].img)
-		mlx_destroy_image(var->mlx, var->p[4].img);
-	if (var->p[5].img)
-		mlx_destroy_image(var->mlx, var->p[5].img); 
-	return ;
+	i = -1;
+	while (++i <= 6)
+	{
+		if (var->p[i].img)
+			mlx_destroy_image(var->mlx, var->p[i].img);
+	}
 }
 
 void	free_all(t_var var)
 {
-
-	// free_img(&var);
+	free_img(&var);
+	if (var.map->tab)
+		free_tab(&var, var.map->tab);
+	if (var.map->printmove)
+		free(var.map->printmove);
+	if (var.map)
+		free(var.map);
+	// if (var.santa)
+	// 	free(var.santa);
 	if (var.win)
 		mlx_destroy_window(var.mlx, var.win);
 	if (var.mlx)
@@ -65,13 +98,9 @@ void	free_all(t_var var)
 		mlx_destroy_display(var.mlx);
 		free(var.mlx);
 	}
-	if (var.map->tab)
-		free_tab(&var, var.map->tab);
-	if (var.map)
-		free(var.map);
-	if (var.santa)
-		free(var.santa);
-		
+	
+	
+	
 }
 
 int	main(int argc, char **argv)
@@ -80,29 +109,30 @@ int	main(int argc, char **argv)
 	
 	if (argc != 2)
 		return (1);
+	// if (init_var(&var) == 1)
+	// 	return (1)
+	
 	var.mlx = mlx_init();
 	var.win = NULL;
+	init_var(&var);
 	if (init_santa(&var) == 1)
 		return (1);
 	if (init_map(&var) == 1)
 		return (1);
-
 	if (check_rectangular(argv, &var) == 1)
 	{
 		free_all(var);
 		return (1);
 	}
-		
 	var.win = mlx_new_window(var.mlx, 80 * (var.map->width + 1), 80 * (var.map->height), "Santa!");
+	// printf("open");
 	mlx_expose_hook(var.win, print_map, &var);
-	// var.img->img = mlx_xpm_file_to_image(var.mlx, "./images/santa_R.xpm", &var.img->width, &var.img->height);
-	// mlx_put_image_to_window(var.mlx, var.win, var.img->img, var.santa->x, var.santa->y);
-	// printf("tab = %c\n", var.map->tab[3][1]);
+	// printf("printmpa");
 	mlx_key_hook(var.win, key_hook, &var);
+	// printf("afterkeyhook");
 	mlx_hook(var.win, DestroyNotify, KeyReleaseMask, exit_game, &var);
 	mlx_loop(var.mlx);
-	free (var.santa);
-	
+	free_all(var);
 	return (0);
 }
 

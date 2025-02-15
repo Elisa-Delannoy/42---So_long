@@ -69,6 +69,7 @@ typedef struct s_map {
 	size_t	width;
 	int		count;
 	int		move;
+	char	*printmove;
 }				t_map;
 
 typedef struct	s_var {
@@ -76,8 +77,8 @@ typedef struct	s_var {
 	void		*mlx;
 	void		*win;
 	t_map		*map;
-	t_img		*img;
-	t_player	*santa;
+	// t_img		*img;
+	t_player	santa;
 	t_img		BG;
 	t_img		p[6];
 	t_img		collect;
@@ -98,6 +99,7 @@ int		init_santa(t_var *var);
 int		print_map(t_var *var);
 int		exit_game(t_var *var);
 void	free_tab(t_var *var, char **tab);
+void	free_all(t_var var);
 
 /*voir comment ajouter le dossier gnl dans Makefile ou voir pour modifier les fonctions de la libft*/
 char	*get_next_line(int fd);

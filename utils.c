@@ -27,8 +27,11 @@ void	free_tab(t_var *var, char **tab)
 	size_t	i;
 
 	map_height(var);
+
+	if (!tab)
+		return ;
 	i = 0;
-	while (i < var->map->height)
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;

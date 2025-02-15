@@ -26,6 +26,7 @@ char	**map_copy(t_var *var)
 		cpy[i] = ft_strdup(var->map->tab[i]);
 		i++;
 	}
+	cpy[i] = NULL;
 	return (cpy);
 }
 
@@ -64,17 +65,15 @@ void	check_p_pos(t_var *var)
 	}
 	if (ft_strchr("P", var->map->tab[var->map->i][var->map->j]) != NULL)
 	{
-		var->santa->x = var->map->j;
-		var->santa->y = var->map->i;
+		var->santa.x = var->map->j;
+		var->santa.y = var->map->i;
 	}
-	printf("var->santa->x, %d\n", var->santa->x);
-	printf("var->santa->y, %d\n", var->santa->y);
-	check_way(var, var->santa->y, var->santa->x, map_copy(var));
+	check_way(var, var->santa.y, var->santa.x, map_copy(var));
 	free_tab(var, map_copy(var));
 	if (var->map->e != 0 || var->map->count != var->map->c)
 		return (ft_putstr_fd("invalid map\n", 2));
-	var->santa->x = var->santa->x * 80;
-	var->santa->y = var->santa->y * 80;
+	var->santa.x = var->santa.x * 80;
+	var->santa.y = var->santa.y * 80;
 }
 
 int	parse_map(t_var *var)

@@ -96,10 +96,16 @@ int	print_map(t_var *var)
 		var->map->j = 0;
 		var->map->i++;
 	}
+	mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
+	mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, var->map->printmove);
+	// printf("ok printmap");
 	return (0);
 }
+
 int	exit_game(t_var *var)
 {
+	// printf("end");
+	// free_all(*var);
 	mlx_destroy_window(var->mlx, var->win);
 	mlx_destroy_display(var->mlx);
 	free(var->mlx);
@@ -108,18 +114,17 @@ int	exit_game(t_var *var)
 
 int	init_santa(t_var *var)
 {
-	var->santa = malloc(sizeof(t_player));
-	if (!var->santa)
-		return (1);
-	var->santa->x = 0;
-	var->santa->y = 0;
-	var->prev_keycode_LR = D_right;
+	// var->santa = malloc(sizeof(t_player));
+	// if (!var->santa)
+	// 	return (1);
+	var->santa.x = 0;
+	var->santa.y = 0;
 	return (0);
 }
 
 int	img_event_exit(t_var *var)
 {
-	if (var->map->tab[var->santa->y / 80][var->santa->x / 80] == 'E'
+	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'E'
 		&& var->map->c == 0)
 		exit_game(var);
 	return (0);
@@ -127,15 +132,15 @@ int	img_event_exit(t_var *var)
 
 int	img_event_collectible(int keycode, t_var *var)
 {
-	if (var->map->tab[var->santa->y / 80][var->santa->x / 80] == 'C')
+	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'C')
 	{
-		var->map->tab[var->santa->y / 80][var->santa->x / 80] = '0';
+		var->map->tab[var->santa.y / 80][var->santa.x / 80] = '0';
 		if (keycode == A_left || var->prev_keycode_LR == A_left)
 			mlx_put_image_to_window(var->mlx, var->win, var->p[5].img,
-				var->santa->x, var->santa->y);
+				var->santa.x, var->santa.y);
 		else
 			mlx_put_image_to_window(var->mlx, var->win, var->p[4].img,
-				var->santa->x, var->santa->y);
+				var->santa.x, var->santa.y);
 		var->map->c--;
 		if (var->map->c == 0)
 			mlx_put_image_to_window(var->mlx, var->win, var->exit[2].img,
@@ -182,50 +187,55 @@ int	key_hook(int keycode, t_var *var)
 {
 	t_player	p;
 
-	p.x = var->santa->x;
-	p.y = var->santa->y;
+	p.x = var->santa.x;
+	p.y = var->santa.y;
+
 	if (keycode == ESC)
 		exit_game(var);
 	if ((keycode == A_left || keycode == W_top || keycode == S_bottom
 		|| keycode == D_right))
 	{
-		if  (var->map->tab[var->santa->y / 80][var->santa->x / 80] == 'E' && var->map->c == 0)
+		if  (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'E' && var->map->c == 0)
 			mlx_put_image_to_window(var->mlx, var->win, var->exit[2].img,
-				var->santa->x, var->santa->y);
-		else if (var->map->tab[var->santa->y / 80][var->santa->x / 80] == 'E' && var->map->c <= var->map->c2)
+				var->santa.x, var->santa.y);
+		else if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'E' && var->map->c <= var->map->c2)
 			mlx_put_image_to_window(var->mlx, var->win, var->exit[1].img,
-				var->santa->x, var->santa->y);
-		else if (var->map->tab[var->santa->y / 80][var->santa->x / 80] == 'E' && var->map->c > var->map->c2)
-			mlx_put_image_to_window(var->mlx, var->win, var->exit[0].img, var->santa->x, var->santa->y);
+				var->santa.x, var->santa.y);
+		else if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'E' && var->map->c > var->map->c2)
+			mlx_put_image_to_window(var->mlx, var->win, var->exit[0].img, var->santa.x, var->santa.y);
 		else 
-			mlx_put_image_to_window(var->mlx, var->win, var->BG.img, var->santa->x, var->santa->y);
+			mlx_put_image_to_window(var->mlx, var->win, var->BG.img, var->santa.x, var->santa.y);
 		
 		if (keycode == D_right)
-			var->santa->x += 80;
+			var->santa.x += 80;
 		if (keycode == A_left)
-			var->santa->x -= 80;
+			var->santa.x -= 80;
 		if (keycode == W_top)
-			var->santa->y -= 80;
+			var->santa.y -= 80;
 		if (keycode == S_bottom) 
-			var->santa->y += 80;
-		if (var->map->tab[var->santa->y / 80][(var->santa->x / 80)] == '1')
+			var->santa.y += 80;
+		if (var->map->tab[var->santa.y / 80][(var->santa.x / 80)] == '1')
 		{
-			var->santa->x = p.x;
-			var->santa->y = p.y;
+			var->santa.x = p.x;
+			var->santa.y = p.y;
 		}
 		else
 		{
-			
 			var->map->move++;
-			ft_putstr_fd(ft_itoa(var->map->move), 1);
+			var->map->printmove = ft_itoa(var->map->move);
+			ft_putstr_fd(var->map->printmove, 1);
 			ft_putstr_fd("\n", 1);
+			// printf("%d\n", var->map->move++);
+			mlx_put_image_to_window(var->mlx, var->win, var->wall[0].img, 240, 0);
+			mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
+			mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, var->map->printmove);
+			free(var->map->printmove);
+
 		}
+
 	}
 	if (keycode == A_left || keycode == D_right)
 		var->prev_keycode_LR = keycode;
-	mlx_put_image_to_window(var->mlx, var->win, var->wall[0].img, 240, 0);
-	mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
-	mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, ft_itoa(var->map->move));
-	img_new_event(keycode, var, var->santa->x, var->santa->y);
+	img_new_event(keycode, var, var->santa.x, var->santa.y);
 	return (0);
 }
