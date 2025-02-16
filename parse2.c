@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:15:14 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/12 15:15:28 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/16 12:32:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ char	**map_copy(t_var *var)
 
 int	check_way(t_var *var, size_t x, size_t y, char **cpy)
 {
-	if (x < 0 || y < 0 || x > var->map->height || y > var->map->width)
+	// if (x < 0 || y < 0 || x > var->map->height || y > var->map->width)
+	if (x > var->map->height || y > var->map->width)
+	
 		return (1);
 	if (cpy[x][y] == '1')
 		return (1);
@@ -50,6 +52,8 @@ int	check_way(t_var *var, size_t x, size_t y, char **cpy)
 
 void	check_p_pos(t_var *var)
 {
+	char	**cpy;
+	
 	var->map->i = 0;
 	var->map->j = 0;
 	while (var->map->tab[var->map->i] && ft_strchr("P", var->map->tab
@@ -68,8 +72,9 @@ void	check_p_pos(t_var *var)
 		var->santa.x = var->map->j;
 		var->santa.y = var->map->i;
 	}
-	check_way(var, var->santa.y, var->santa.x, map_copy(var));
-	free_tab(var, map_copy(var));
+	cpy = map_copy(var);
+	check_way(var, var->santa.y, var->santa.x, cpy);
+	free_tab(cpy);
 	if (var->map->e != 0 || var->map->count != var->map->c)
 		return (ft_putstr_fd("invalid map\n", 2));
 	var->santa.x = var->santa.x * 80;

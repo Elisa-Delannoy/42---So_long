@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse3.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:42:10 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/14 18:42:12 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/16 12:25:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ size_t	map_height(t_var *var)
 	return (var->map->height);
 }
 
-void	free_tab(t_var *var, char **tab)
+void	free_tab(char **tab)
 {
 	size_t	i;
-
-	map_height(var);
 
 	if (!tab)
 		return ;

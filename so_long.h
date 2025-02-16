@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:22:20 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/11 20:50:25 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/16 13:02:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int		key_hook(int keycode, t_var *var);
 int		init_santa(t_var *var);
 int		print_map(t_var *var);
 int		exit_game(t_var *var);
-void	free_tab(t_var *var, char **tab);
-void	free_all(t_var var);
+void	free_tab(char **tab);
+void	free_all(t_var *var);
 
 /*voir comment ajouter le dossier gnl dans Makefile ou voir pour modifier les fonctions de la libft*/
 char	*get_next_line(int fd);

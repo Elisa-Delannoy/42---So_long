@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printmap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/12 15:46:28 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:16:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,11 @@ int	print_map(t_var *var)
 int	exit_game(t_var *var)
 {
 	// printf("end");
-	// free_all(*var);
-	mlx_destroy_window(var->mlx, var->win);
-	mlx_destroy_display(var->mlx);
-	free(var->mlx);
+	free_all(var);
+	// mlx_destroy_window(var->mlx, var->win);
+	// mlx_destroy_display(var->mlx);
+	// free(var->mlx);
+	
 	exit (0);
 }
 
@@ -226,7 +227,7 @@ int	key_hook(int keycode, t_var *var)
 			ft_putstr_fd(var->map->printmove, 1);
 			ft_putstr_fd("\n", 1);
 			// printf("%d\n", var->map->move++);
-			mlx_put_image_to_window(var->mlx, var->win, var->wall[0].img, 240, 0);
+			mlx_put_image_to_window(var->mlx, var->win, var->wall[0].img, 240, -10);
 			mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
 			mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, var->map->printmove);
 			free(var->map->printmove);

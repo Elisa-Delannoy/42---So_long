@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:38:17 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/11 20:56:00 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/16 12:36:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int	check_rectangular(char **argv, t_var *var)
 	var->map->tab = stock_map_tab(argv);
 	if (!var->map->tab)
 		return (1);
+	map_height(var);
 	i = 0;
 	j = ft_strlen(var->map->tab[i]);
 	while (var->map->tab[i])
@@ -145,6 +146,6 @@ int	check_rectangular(char **argv, t_var *var)
 		i++;
 	}
 	if (check_map(var) == 1)
-		free_tab(var, var->map->tab);
+		free_tab(var->map->tab);
 	return (0);
 }
