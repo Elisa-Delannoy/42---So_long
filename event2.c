@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printmap.c                                         :+:      :+:    :+:   */
+/*   event2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/16 13:16:17 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/17 19:56:03 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int	img_event_collectible(int keycode, t_var *var)
 				var->mapexit.x, var->mapexit.y);
 		return (0);
 	}
-	img_event_exit(var);
+	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'E'
+		&& var->map->c == 0)
+		exit_game(var);
 	return (1);
 }
 

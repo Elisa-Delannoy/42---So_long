@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printmap.c                                         :+:      :+:    :+:   */
+/*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/16 13:16:17 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/17 19:55:20 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	key(int keycode, t_var *var)
 	if (keycode == S_bottom)
 		var->santa.y += 80;
 }
+
+// void	reset_img(t_var *var)
+// {
+// 	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] != 'E')
+// 		mlx_put_image_to_window(var->mlx, var->win, var->bg.img, var->santa.x,
+// 		var->santa.y);
+// }
 
 int	key_hook(int keycode, t_var *var)
 {
