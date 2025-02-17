@@ -28,11 +28,6 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	while (s[i])
 	{
-		// if (s[i] == '\n')
-		// {
-		// 	new[i] = '\0';
-		// 	return (new);
-		// }
 		new[i] = s[i];
 		i++;
 	}

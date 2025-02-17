@@ -32,7 +32,8 @@ char	*ft_strjoin_line(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	new = ft_calloc_line((ft_strlen_line(s1) + ft_strlen_line(s2) + 1), sizeof(char));
+	new = ft_calloc_line((ft_strlen_line(s1) + ft_strlen_line(s2) + 1),
+			sizeof(char));
 	if (new == NULL)
 		return (NULL);
 	i = 0;

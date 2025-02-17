@@ -19,7 +19,7 @@ CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long
 SRC = main.c get_next_line.c get_next_line_utils.c parse.c parse2.c utils.c \
-	printmap.c
+	printmap.c event.c event2.c init_free.c
 OBJ = $(SRC:.c=.o)
 
 # SRCBONUS = main_bonus.c

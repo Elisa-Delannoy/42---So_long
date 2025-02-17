@@ -24,60 +24,13 @@ int	check_name(char **argv)
 	return (0);
 }
 
-// int	open_read(char **argv)
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*line;
-	
-// 	i = 0;
-// 	fd = open(argv[1], O_RDONLY);
-// 	line = get_next_line(fd);
-// 	while (line != NULL)
-// 	{
-// 		i++;
-// 		line = get_next_line(fd);
-// 	}
-// 	free(line);
-// 	get_next_line(42);
-// 	return (i);
-// }
-// char	**stock_map_tab(char **argv)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	char	**tab;
-// 	int		i;
-
-// 	fd = open(argv[1], O_RDONLY);
-// 	tab = malloc((open_read(argv) + 1) * sizeof(char *));
-// 	if (tab == NULL)
-// 		return (NULL);
-// 	line = get_next_line(fd);
-// 	i = 0;
-// 	while (line != NULL)
-// 	{
-// 		if (line[ft_strlen(line) - 1] == '\n')
-// 			line[ft_strlen(line) - 1] = '\0';
-// 		if (line[ft_strlen(line) - 1] == '\r')
-// 			line[ft_strlen(line) - 1] = '\0';
-// 		tab[i] = line;
-// 		line = get_next_line(fd);
-// 		i++;
-// 	}
-// 	get_next_line(42);
-// 	tab[i] = NULL;
-// 	free(line);
-// 	return (tab);
-// }
-
 t_list	*open_read(char **argv)
 {
 	int		fd;
 	char	*line;
 	t_list	*map_line;
 	t_list	*map;
-	
+
 	map = NULL;
 	fd = open(argv[1], O_RDONLY);
 	line = get_next_line(fd);
@@ -92,19 +45,20 @@ t_list	*open_read(char **argv)
 		line = get_next_line(fd);
 	}
 	free(line);
+	close(fd);
 	return (map);
 }
 
 char	**stock_map_tab(char **argv)
 {
-	t_list		* map;
+	t_list		*map;
 	t_list		*temp;
 	char		**tab;
 	int			i;
 
 	map = open_read(argv);
 	if (!map)
-        return (NULL);
+		return (NULL);
 	temp = map;
 	tab = malloc(sizeof(char *) * (ft_lstsize(map) + 1));
 	if (tab == NULL)
@@ -134,7 +88,7 @@ int	check_rectangular(char **argv, t_var *var)
 		return (1);
 	var->map->tab = stock_map_tab(argv);
 	if (!var->map->tab)
-		return (1);
+		return (ft_putstr_fd("map's empty\n", 2), 1);
 	map_height(var);
 	i = 0;
 	j = ft_strlen(var->map->tab[i]);
@@ -146,6 +100,6 @@ int	check_rectangular(char **argv, t_var *var)
 		i++;
 	}
 	if (check_map(var) == 1)
-		free_tab(var->map->tab);
+		return (1);
 	return (0);
 }

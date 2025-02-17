@@ -12,7 +12,6 @@
 
 #include "so_long.h"
 
-
 size_t	map_height(t_var *var)
 {
 	var->map->width = ft_strlen(var->map->tab[0]) - 1;
