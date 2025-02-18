@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/17 19:56:03 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:46:00 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	img_event_collectible(int keycode, t_var *var)
 {
 	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'C')
 	{
-		var->map->tab[var->santa.y / 80][var->santa.x / 80] = '0';
+		var->map->tab[var->santa.y / 80][var->santa.x / 80] = 'T';
 		if (keycode == A_left || var->prev_keycode_lr == A_left)
-			mlx_put_image_to_window(var->mlx, var->win, var->p[5].img,
+			mlx_put_image_to_window(var->mlx, var->win, var->pp_a[1][var->i].img,
 				var->santa.x, var->santa.y);
 		else
-			mlx_put_image_to_window(var->mlx, var->win, var->p[4].img,
+			mlx_put_image_to_window(var->mlx, var->win, var->pp_a[0][var->i].img,
 				var->santa.x, var->santa.y);
 		var->map->c--;
 		if (var->map->c == 0)
@@ -68,25 +68,25 @@ void	img_new_event(int keycode, t_var *var, int x, int y)
 	if (img_event_collectible(keycode, var) == 1)
 	{
 		if (keycode == D_right)
-			mlx_put_image_to_window(var->mlx, var->win, var->p[0].img, x, y);
+			mlx_put_image_to_window(var->mlx, var->win, var->p_a[0][var->i].img, x, y);
 		if (keycode == A_left)
-			mlx_put_image_to_window(var->mlx, var->win, var->p[1].img, x, y);
+			mlx_put_image_to_window(var->mlx, var->win, var->p_a[1][var->i].img, x, y);
 		if (keycode == W_top)
 		{
 			if (var->prev_keycode_lr == A_left)
-				mlx_put_image_to_window(var->mlx, var->win, var->p[3].img,
+				mlx_put_image_to_window(var->mlx, var->win, var->p[1].img,
 					x, y);
 			else
-				mlx_put_image_to_window(var->mlx, var->win, var->p[2].img,
+				mlx_put_image_to_window(var->mlx, var->win, var->p[0].img,
 					x, y);
 		}
 		else if (keycode == S_bottom)
 		{
 			if (var->prev_keycode_lr == D_right)
-				mlx_put_image_to_window(var->mlx, var->win, var->p[0].img,
+				mlx_put_image_to_window(var->mlx, var->win, var->p_a[0][var->i].img,
 					x, y);
 			else
-				mlx_put_image_to_window(var->mlx, var->win, var->p[1].img,
+				mlx_put_image_to_window(var->mlx, var->win, var->p_a[1][var->i].img,
 					x, y);
 		}
 	}

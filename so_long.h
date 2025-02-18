@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:22:20 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/16 13:02:31 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:45:14 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,17 @@ typedef struct s_map
 typedef struct s_var
 {
 	int			prev_keycode_lr;
+	int			stock_keycode;
 	void		*mlx;
 	void		*win;
+	int			i;
+	int			i_loop;
 	t_map		*map;
 	t_player	santa;
 	t_img		bg;
-	t_img		p[6];
+	t_img		p[3];
+	t_img		p_a[2][4];
+	t_img		pp_a[2][2];
 	t_img		collect;
 	t_img		exit[3];
 	t_img		wall[2];
@@ -106,6 +111,9 @@ void	init_var(t_var *var);
 void	free_img(t_var *var);
 void	free_all(t_var *var);
 void	img_new_event(int keycode, t_var *var, int x, int y);
+
+
+void	santa_anim(t_var *var, int x, int y);
 
 char	*get_next_line(int fd);
 size_t	ft_strlen_line(const char *s);

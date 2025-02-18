@@ -6,11 +6,35 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:30:05 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/17 19:25:24 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:52:51 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int loop_hook(t_var *var)
+{
+	var->i_loop = (var->i_loop + 1) % 10000;
+	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'T')
+	{
+		if (var->i_loop < 2500 || (var->i_loop >= 5000 && var->i_loop < 7500))
+			var->i = 0;
+		else if ((var->i_loop >= 2500 && var->i_loop < 5000) || var->i_loop >= 7500)
+			var->i = 1;
+	}
+	else if (var->i_loop >= 2500 && var->i_loop < 5000)
+		var->i = 1;
+	else if (var->i_loop >= 5000 && var->i_loop < 7500)
+		var->i = 2;
+	else if (var->i_loop >= 7500)
+		var->i = 3;
+	else if (var->i_loop == 0)
+		var->i = 0;
+	santa_anim(var, var->santa.x, var->santa.y);
+
+	return (0);
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -36,6 +60,7 @@ int	main(int argc, char **argv)
 	mlx_expose_hook(var.win, print_map, &var);
 	mlx_key_hook(var.win, key_hook, &var);
 	mlx_hook(var.win, DestroyNotify, KeyReleaseMask, exit_game, &var);
+	mlx_loop_hook(var.mlx, loop_hook, &var);
 	mlx_loop(var.mlx);
 	return (0);
 }

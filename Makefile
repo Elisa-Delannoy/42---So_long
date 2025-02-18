@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/30 11:33:24 by edelanno          #+#    #+#              #
-#    Updated: 2025/02/10 17:21:38 by marvin           ###   ########.fr        #
+#    Updated: 2025/02/18 11:54:19 by edelanno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,8 @@ CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long
 SRC = main.c get_next_line.c get_next_line_utils.c parse.c parse2.c utils.c \
-	printmap.c event.c event2.c init_free.c
+	printmap.c event.c event2.c init_free.c animation.c
 OBJ = $(SRC:.c=.o)
-
-# SRCBONUS = main_bonus.c
-# OBJBONUS = $(SRCBONUS:.c=.o)
 
 all : $(NAME)
 	@echo "\033[32mCompilation successful !\033[0m"
@@ -38,9 +35,6 @@ $(NAME) : $(OBJ) $(LIBFT)
 %.o: %.c
 	@echo "Compilating $@"
 	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -c $< -o $@
-
-# bonus : $(OBJBONUS) $(LIBFT)
-# 	@$(CC) $(OBJBONUS) -o $(NAME) $(LIBFT) 
 
 clean :
 	@$(MAKE) -s clean -C $(LIBFT_DIR)

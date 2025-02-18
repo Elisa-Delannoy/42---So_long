@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:15:14 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/16 12:32:10 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/18 12:06:35 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ int	parse_map(t_var *var)
 
 int	check_map(t_var *var)
 {
-	while (var->map->tab[++(var->map->i)])
+	while (var->map->tab[(var->map->i)])
 	{
-		var->map->j = -1;
-		while (var->map->tab[var->map->i][++(var->map->j)])
+		var->map->j = 0;
+		while (var->map->tab[var->map->i][(var->map->j)])
 		{
 			if (ft_strchr("E", var->map->tab[var->map->i][var->map->j]) != NULL)
 				var->map->e++;
@@ -108,7 +108,9 @@ int	check_map(t_var *var)
 				return (ft_putstr_fd("must have only 1 E and 1 P\n", 2), 1);
 			if (parse_map(var) == 1)
 				return (1);
+			var->map->j++;
 		}
+		var->map->i++;
 	}
 	if (var->map->c < 1 || var->map->e < 1 || var->map->p < 1)
 		return (ft_putstr_fd("must have 1 E, 1 P and least 1 C\n", 2), 1);
