@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:30:05 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 13:24:36 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 00:46:18 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ int loop_hook(t_var *var)
 		var->i = 2;
 	else if (var->i_loop >= 7500)
 		var->i = 3;
-	else if (var->map->tab[var->pos_ennemy.y / 80][var->pos_ennemy.x / 80] == 'M' && var->i_loop == 0)
-		var->i_M++;
-	ennemies_anim(var);
+	else if(var->i_loop == 0)
+		var->i = 0;
+	// else if (var->map->tab[var->pos_ennemy.y / 80][var->pos_ennemy.x / 80] == 'M' && var->i_loop == 0)
+	// 	var->i_M++;
+	
 	santa_anim(var, var->santa.x, var->santa.y);
+	ennemies_anim(var);
+	kill_ennemy(var);
 	return (0);
 }
 
@@ -47,7 +51,10 @@ int	main(int argc, char **argv)
 	init_var(&var);
 	init_santa(&var);
 	if (init_map(&var) == 1)
+	{
+		free_all(&var);
 		return (1);
+	}
 	if (check_rectangular(argv, &var) == 1)
 	{
 		free_all(&var);

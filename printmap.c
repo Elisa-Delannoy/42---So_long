@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 13:25:14 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 23:05:19 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,18 @@ int	stock_img(t_var *var)
 			"present_R.xpm", &var->pp_a[1][1].width, &var->pp_a[1][1].height);
 	var->ennemy.img = mlx_xpm_file_to_image(var->mlx, "./images/ennemy.xpm",
 			&var->ennemy.width, &var->ennemy.height);
-
+	var->dead[0].img = mlx_xpm_file_to_image(var->mlx, "./images/deadR.xpm",
+		&var->dead[0].width, &var->dead[0].height);
+	var->dead[1].img = mlx_xpm_file_to_image(var->mlx, "./images/deadL.xpm",
+		&var->dead[1].width, &var->dead[1].height);
+	var->santa_fight[0].img = mlx_xpm_file_to_image(var->mlx, "./images/fight_R"
+		".xpm", &var->santa_fight[0].width, &var->santa_fight[0].height);
+	var->santa_fight[1].img = mlx_xpm_file_to_image(var->mlx, "./images/fight_L"
+		".xpm", &var->santa_fight[1].width, &var->santa_fight[1].height);
+	var->santa_fight[2].img = mlx_xpm_file_to_image(var->mlx, "./images/fight_T"
+		".xpm", &var->santa_fight[2].width, &var->santa_fight[2].height);
+	var->santa_fight[3].img = mlx_xpm_file_to_image(var->mlx, "./images/fight_b"
+		".xpm", &var->santa_fight[3].width, &var->santa_fight[3].height);
 			
 	// var->pp_a[1][2].img = mlx_xpm_file_to_image(var->mlx, "./images/santa_"
 	// 	"present_L.xpm", &var->pp_a[1][2].width, &var->pp_a[1][2].height);
@@ -101,13 +112,22 @@ void	put_image(t_var *var, int x, int y)
 	}
 	if (var->map->tab[var->map->i][var->map->j] == 'M')
 	{
-		var->pos_ennemy.x = x;
-		var->pos_ennemy.y = y;
-		var->e.x = var->pos_ennemy.x;
-		var->e.y = var->pos_ennemy.y;
 		mlx_put_image_to_window(var->mlx, var->win, var->ennemy.img, x, y);
+		// printf("%d\n", x / 80);
+		// printf("%d\n", y / 80);
+		// printf("map m %d\n",var->map->m );
+		// printf("%d\n", var->e[10].x);
+		if (var->map->m > 0)
+		{
+			var->e[var->map->m - 1].x = y / 80;
+			var->e[var->map->m - 1].y = x / 80;
+			var->pos_ennemy[var->map->m - 1].x = x / 80;
+			var->pos_ennemy[var->map->m - 1].y = y / 80;
+		// 	printf("y %d\n", var->e[0].y);
+		// printf("x %d\n", var->e[0].x);
+			var->map->m--;
+		}
 	}
-		
 }
 
 int	print_map(t_var *var)
@@ -119,6 +139,12 @@ int	print_map(t_var *var)
 	y = 0;
 	var->map->i = 0;
 	var->map->j = 0;
+	var->e = malloc((var->map->m + 1) * sizeof(t_player));
+	var->pos_ennemy = malloc((var->map->m + 1) * sizeof(t_player));
+	var->e[var->map->m].x = '\0';
+	var->e[var->map->m].y = '\0';
+	var->pos_ennemy[var->map->m].x = '\0';
+	var->pos_ennemy[var->map->m].y = '\0';
 	stock_img(var);
 	while (var->map->tab[var->map->i])
 	{
@@ -133,8 +159,10 @@ int	print_map(t_var *var)
 		var->map->j = 0;
 		var->map->i++;
 	}
-	// printf("%d\n", var->e.y);
-	// printf("%d\n", var->e.x);
+	// printf("x0 =%d\n", var->pos_ennemy[0].x);
+	// printf("y0 =%d\n", var->pos_ennemy[0].y);
+	// printf("x1 =%d\n", var->pos_ennemy[1].x);
+	// printf("y1 =%d\n", var->pos_ennemy[1].y);
 	mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
 	mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, var->map->printmove);
 	return (0);

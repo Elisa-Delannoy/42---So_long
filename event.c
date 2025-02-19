@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 20:41:03 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 23:12:18 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,18 @@ void	key(int keycode, t_var *var)
 // 		var->santa.y);
 // }
 
+
+
+
+
 int	key_hook(int keycode, t_var *var)
 {
 	t_player	p;
 
 	p.x = var->santa.x;
 	p.y = var->santa.y;
+	
+	// var->previous_keycode = var->stock_keycode;
 	var->stock_keycode = keycode;
 	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'T')
 		var->map->tab[var->santa.y / 80][var->santa.x / 80] = '0';
@@ -69,7 +75,9 @@ int	key_hook(int keycode, t_var *var)
 			print_move(var);
 	}
 	if (keycode == A_left || keycode == D_right)
-		var->prev_keycode_lr = keycode;
+		var->prev_keycode_lr = keycode;	
 	img_new_event(keycode, var, var->santa.x, var->santa.y);
 	return (0);
 }
+
+

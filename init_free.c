@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:26:34 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 13:14:13 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 00:49:45 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	init_map(t_var *var)
 	var->map->count = 0;
 	var->map->move = 0;
 	var->map->printmove = "0";
+	var->map->m = 0;
 	return (0);
 }
 
@@ -44,7 +45,8 @@ void	init_var(t_var *var)
 	int	i;
 	
 	var->prev_keycode_lr = D_right;
-	var-> stock_keycode = D_right;
+	var->stock_keycode = D_right;
+	var->previous_keycode = D_right; 
 	var->bg.img = NULL;
 	var->i_loop = 0;
 	var->i = 0;
@@ -61,6 +63,7 @@ void	init_var(t_var *var)
 	while (i < 4)
 	{
 		var->p_a[1][i].img = NULL;
+		var->santa_fight[i].img = NULL;
 		if (i < 2)
 			var->pp_a[1][i].img = NULL;
 		i++;
@@ -68,22 +71,24 @@ void	init_var(t_var *var)
 	i = 0;
 	var->collect.img = NULL;
 	var->ennemy.img = NULL;
+	var->dead[0].img = NULL;
+	var->dead[1].img = NULL;
 	var->p[0].img = NULL;
 	var->p[1].img = NULL;
 	var->wall[0].img = NULL;
 	var->wall[1].img = NULL;
+	var->e_dead.img = NULL;	
 	i = 0;
 	while (i < 3)
 	{
 		var->exit[i].img = NULL;
 		i++;
 	}
-	var->pos_ennemy.x = 0;
-	var->pos_ennemy.y = 0;
+
 	var->mapexit.x = 0;
 	var->mapexit.y = 0;
-	var->e.x = 0;
-	var->e.y = 0;
+	var->pos_ennemy = NULL;
+	var->e = NULL;
 }
 
 // void	init_var(t_var *var)
@@ -121,6 +126,10 @@ void	free_img(t_var *var)
 
 	if (var->collect.img)
 		mlx_destroy_image(var->mlx, var->collect.img);
+	if (var->dead[0].img)
+		mlx_destroy_image(var->mlx, var->dead[0].img);
+	if (var->dead[1].img)
+		mlx_destroy_image(var->mlx, var->dead[1].img);
 	i = -1;
 	while (++i < 3)
 	{
@@ -142,16 +151,20 @@ void	free_img(t_var *var)
 	i = 0;
 	while (i < 4)
 	{
-		mlx_destroy_image(var->mlx, var->p_a[0][i].img);
-		if ( i < 2)
+		if (var->p_a[0][i].img)
+			mlx_destroy_image(var->mlx, var->p_a[0][i].img);
+		if ( i < 2 && var->pp_a[0][i].img)
 			mlx_destroy_image(var->mlx, var->pp_a[0][i].img);
 		i++;
 	}
-		i = 0;
+	i = 0;
 	while (i < 4)
 	{
-		mlx_destroy_image(var->mlx, var->p_a[1][i].img);
-		if ( i < 2)
+		if (var->p_a[1][i].img)
+			mlx_destroy_image(var->mlx, var->p_a[1][i].img);
+		if (var->santa_fight[i].img)
+			mlx_destroy_image(var->mlx, var->santa_fight[i].img);
+		if ( i < 2 && var->pp_a[0][i].img)
 			mlx_destroy_image(var->mlx, var->pp_a[1][i].img);
 		i++;
 	}
@@ -167,6 +180,10 @@ void	free_img(t_var *var)
 
 void	free_all(t_var *var)
 {
+	if (var->e)
+		free(var->e);
+	if (var->pos_ennemy)
+		free(var->pos_ennemy);
 	if (var->map->tab)
 		free_tab(var->map->tab);
 	if (var->map)

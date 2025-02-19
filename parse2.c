@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:15:14 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 20:14:18 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:07:21 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int	check_map(t_var *var)
 				var->map->p++;
 			if (ft_strchr("C", var->map->tab[var->map->i][var->map->j]) != NULL)
 				var->map->c++;
+			if (ft_strchr("M", var->map->tab[var->map->i][var->map->j]) != NULL)
+				var->map->m++;
 			if (var->map->e > 1 || var->map->p > 1)
 				return (ft_putstr_fd("must have only 1 E and 1 P\n", 2), 1);
 			if (parse_map(var) == 1)
