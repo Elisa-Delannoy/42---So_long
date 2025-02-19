@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:30:05 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 17:52:51 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:24:36 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int loop_hook(t_var *var)
 		var->i = 2;
 	else if (var->i_loop >= 7500)
 		var->i = 3;
-	else if (var->i_loop == 0)
-		var->i = 0;
+	else if (var->map->tab[var->pos_ennemy.y / 80][var->pos_ennemy.x / 80] == 'M' && var->i_loop == 0)
+		var->i_M++;
+	ennemies_anim(var);
 	santa_anim(var, var->santa.x, var->santa.y);
-
 	return (0);
 }
 
@@ -39,7 +39,7 @@ int loop_hook(t_var *var)
 int	main(int argc, char **argv)
 {
 	t_var		var;
-
+	
 	if (argc != 2)
 		return (1);
 	var.mlx = mlx_init();

@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:26:34 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 17:56:32 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:14:13 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_var(t_var *var)
 	var->bg.img = NULL;
 	var->i_loop = 0;
 	var->i = 0;
+	var->i_M = 1;
 	i = 0;
 	while (i < 4)
 	{
@@ -66,6 +67,7 @@ void	init_var(t_var *var)
 	}
 	i = 0;
 	var->collect.img = NULL;
+	var->ennemy.img = NULL;
 	var->p[0].img = NULL;
 	var->p[1].img = NULL;
 	var->wall[0].img = NULL;
@@ -76,8 +78,12 @@ void	init_var(t_var *var)
 		var->exit[i].img = NULL;
 		i++;
 	}
+	var->pos_ennemy.x = 0;
+	var->pos_ennemy.y = 0;
 	var->mapexit.x = 0;
 	var->mapexit.y = 0;
+	var->e.x = 0;
+	var->e.y = 0;
 }
 
 // void	init_var(t_var *var)
@@ -131,6 +137,8 @@ void	free_img(t_var *var)
 		mlx_destroy_image(var->mlx, var->p[0].img);
 	if (var->p[1].img)
 		mlx_destroy_image(var->mlx, var->p[1].img);
+	if (var->ennemy.img)
+		mlx_destroy_image(var->mlx, var->ennemy.img);
 	i = 0;
 	while (i < 4)
 	{

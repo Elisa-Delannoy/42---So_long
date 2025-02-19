@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:15:14 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 12:06:35 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:14:18 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	parse_map(t_var *var)
 	}
 	else
 	{
-		if (ft_strchr("01CEP", var->map->tab[var->map->i][var->map->j]) == NULL)
-			return (ft_putstr_fd("map must be 0, 1, C, E or P\n", 2), 1);
+		if (ft_strchr("01CEPM", var->map->tab[var->map->i][var->map->j]) == NULL)
+			return (ft_putstr_fd("map must be 0, 1, C, E, P or M\n", 2), 1);
 	}
 	return (0);
 }

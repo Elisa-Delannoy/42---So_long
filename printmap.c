@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 17:45:34 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:25:14 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ int	stock_img(t_var *var)
 			"present_L.xpm", &var->pp_a[1][0].width, &var->pp_a[1][0].height);
 	var->pp_a[1][1].img = mlx_xpm_file_to_image(var->mlx, "./images/santa_"
 			"present_R.xpm", &var->pp_a[1][1].width, &var->pp_a[1][1].height);
+	var->ennemy.img = mlx_xpm_file_to_image(var->mlx, "./images/ennemy.xpm",
+			&var->ennemy.width, &var->ennemy.height);
+
+			
 	// var->pp_a[1][2].img = mlx_xpm_file_to_image(var->mlx, "./images/santa_"
 	// 	"present_L.xpm", &var->pp_a[1][2].width, &var->pp_a[1][2].height);
 	// var->pp_a[1][3].img = mlx_xpm_file_to_image(var->mlx, "./images/santa_"
@@ -95,6 +99,15 @@ void	put_image(t_var *var, int x, int y)
 		var->mapexit.y = y;
 		mlx_put_image_to_window(var->mlx, var->win, var->exit[0].img, x, y);
 	}
+	if (var->map->tab[var->map->i][var->map->j] == 'M')
+	{
+		var->pos_ennemy.x = x;
+		var->pos_ennemy.y = y;
+		var->e.x = var->pos_ennemy.x;
+		var->e.y = var->pos_ennemy.y;
+		mlx_put_image_to_window(var->mlx, var->win, var->ennemy.img, x, y);
+	}
+		
 }
 
 int	print_map(t_var *var)
@@ -120,6 +133,8 @@ int	print_map(t_var *var)
 		var->map->j = 0;
 		var->map->i++;
 	}
+	// printf("%d\n", var->e.y);
+	// printf("%d\n", var->e.x);
 	mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
 	mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, var->map->printmove);
 	return (0);

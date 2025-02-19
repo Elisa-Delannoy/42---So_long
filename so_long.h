@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:22:20 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/18 17:45:14 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:15:51 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,20 @@ typedef struct s_var
 	void		*win;
 	int			i;
 	int			i_loop;
+	int			i_M;
 	t_map		*map;
 	t_player	santa;
 	t_img		bg;
 	t_img		p[3];
+	t_img		ennemy;
 	t_img		p_a[2][4];
 	t_img		pp_a[2][2];
 	t_img		collect;
 	t_img		exit[3];
 	t_img		wall[2];
 	t_player	mapexit;
+	t_player	pos_ennemy;
+	t_player	e;
 }				t_var;
 
 t_list	*open_read(char **argv);
@@ -114,6 +118,7 @@ void	img_new_event(int keycode, t_var *var, int x, int y);
 
 
 void	santa_anim(t_var *var, int x, int y);
+void	ennemies_anim(t_var *var);
 
 char	*get_next_line(int fd);
 size_t	ft_strlen_line(const char *s);
