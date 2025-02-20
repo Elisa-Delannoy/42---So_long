@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 23:05:19 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:55:22 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	put_image(t_var *var, int x, int y)
 		{
 			var->e[var->map->m - 1].x = y / 80;
 			var->e[var->map->m - 1].y = x / 80;
-			var->pos_ennemy[var->map->m - 1].x = x / 80;
-			var->pos_ennemy[var->map->m - 1].y = y / 80;
+			var->pos_en[var->map->m - 1].x = x / 80;
+			var->pos_en[var->map->m - 1].y = y / 80;
 		// 	printf("y %d\n", var->e[0].y);
 		// printf("x %d\n", var->e[0].x);
 			var->map->m--;
@@ -140,11 +140,11 @@ int	print_map(t_var *var)
 	var->map->i = 0;
 	var->map->j = 0;
 	var->e = malloc((var->map->m + 1) * sizeof(t_player));
-	var->pos_ennemy = malloc((var->map->m + 1) * sizeof(t_player));
+	var->pos_en = malloc((var->map->m + 1) * sizeof(t_player));
 	var->e[var->map->m].x = '\0';
 	var->e[var->map->m].y = '\0';
-	var->pos_ennemy[var->map->m].x = '\0';
-	var->pos_ennemy[var->map->m].y = '\0';
+	var->pos_en[var->map->m].x = '\0';
+	var->pos_en[var->map->m].y = '\0';
 	stock_img(var);
 	while (var->map->tab[var->map->i])
 	{
@@ -159,10 +159,10 @@ int	print_map(t_var *var)
 		var->map->j = 0;
 		var->map->i++;
 	}
-	// printf("x0 =%d\n", var->pos_ennemy[0].x);
-	// printf("y0 =%d\n", var->pos_ennemy[0].y);
-	// printf("x1 =%d\n", var->pos_ennemy[1].x);
-	// printf("y1 =%d\n", var->pos_ennemy[1].y);
+	// printf("x0 =%d\n", var->pos_en[0].x);
+	// printf("y0 =%d\n", var->pos_en[0].y);
+	// printf("x1 =%d\n", var->pos_en[1].x);
+	// printf("y1 =%d\n", var->pos_en[1].y);
 	mlx_string_put(var->mlx, var->win, 160, 30, 0xFFFFFF, "movement :");
 	mlx_string_put(var->mlx, var->win, 240, 30, 0xFFFFFF, var->map->printmove);
 	return (0);

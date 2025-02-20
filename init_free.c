@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:26:34 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/20 00:49:45 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:50:23 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	init_var(t_var *var)
 	var->bg.img = NULL;
 	var->i_loop = 0;
 	var->i = 0;
-	var->i_M = 1;
+	var->i_wait_dead = 0;
+	var->i_wait_fight = 0;
+	var->i_count_wait = 0;
 	i = 0;
 	while (i < 4)
 	{
@@ -87,7 +89,7 @@ void	init_var(t_var *var)
 
 	var->mapexit.x = 0;
 	var->mapexit.y = 0;
-	var->pos_ennemy = NULL;
+	var->pos_en = NULL;
 	var->e = NULL;
 }
 
@@ -182,8 +184,8 @@ void	free_all(t_var *var)
 {
 	if (var->e)
 		free(var->e);
-	if (var->pos_ennemy)
-		free(var->pos_ennemy);
+	if (var->pos_en)
+		free(var->pos_en);
 	if (var->map->tab)
 		free_tab(var->map->tab);
 	if (var->map)

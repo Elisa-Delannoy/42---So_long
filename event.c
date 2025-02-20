@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 23:12:18 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:15:17 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	key_hook(int keycode, t_var *var)
 	p.y = var->santa.y;
 	
 	// var->previous_keycode = var->stock_keycode;
+	// printmaptocheck(var);
 	var->stock_keycode = keycode;
 	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'T')
 		var->map->tab[var->santa.y / 80][var->santa.x / 80] = '0';
