@@ -6,7 +6,7 @@
 #    By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/30 11:33:24 by edelanno          #+#    #+#              #
-#    Updated: 2025/02/18 11:54:19 by edelanno         ###   ########.fr        #
+#    Updated: 2025/02/21 16:10:30 by edelanno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long
 SRC = main.c get_next_line.c get_next_line_utils.c parse.c parse2.c utils.c \
-	printmap.c event.c event2.c init_free.c animation.c
+	printmap.c event.c event2.c init.c free.c animation.c animation2.c \
+	stockimage.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
@@ -34,7 +35,7 @@ $(NAME) : $(OBJ) $(LIBFT)
 
 %.o: %.c
 	@echo "Compilating $@"
-	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -c $< -o $@
+	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 clean :
 	@$(MAKE) -s clean -C $(LIBFT_DIR)

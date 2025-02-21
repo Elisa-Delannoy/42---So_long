@@ -6,29 +6,11 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:15:14 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 14:07:21 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:03:16 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-char	**map_copy(t_var *var)
-{
-	int		i;
-	char	**cpy;
-
-	i = 0;
-	cpy = (char **) malloc((var->map->height + 1) * sizeof(char *));
-	if (cpy == NULL)
-		return (NULL);
-	while (var->map->tab[i])
-	{
-		cpy[i] = ft_strdup(var->map->tab[i]);
-		i++;
-	}
-	cpy[i] = NULL;
-	return (cpy);
-}
 
 int	check_way(t_var *var, size_t x, size_t y, char **cpy)
 {
@@ -85,10 +67,23 @@ int	parse_map(t_var *var)
 	}
 	else
 	{
-		if (ft_strchr("01CEPM", var->map->tab[var->map->i][var->map->j]) == NULL)
+		if (ft_strchr("01CEPM",
+				var->map->tab[var->map->i][var->map->j]) == NULL)
 			return (ft_putstr_fd("map must be 0, 1, C, E, P or M\n", 2), 1);
 	}
 	return (0);
+}
+
+void	count_item(t_var *var)
+{
+	if (ft_strchr("E", var->map->tab[var->map->i][var->map->j]) != NULL)
+		var->map->e++;
+	if (ft_strchr("P", var->map->tab[var->map->i][var->map->j]) != NULL)
+		var->map->p++;
+	if (ft_strchr("C", var->map->tab[var->map->i][var->map->j]) != NULL)
+		var->map->c++;
+	if (ft_strchr("M", var->map->tab[var->map->i][var->map->j]) != NULL)
+		var->map->m++;
 }
 
 int	check_map(t_var *var)
@@ -98,14 +93,7 @@ int	check_map(t_var *var)
 		var->map->j = 0;
 		while (var->map->tab[var->map->i][(var->map->j)])
 		{
-			if (ft_strchr("E", var->map->tab[var->map->i][var->map->j]) != NULL)
-				var->map->e++;
-			if (ft_strchr("P", var->map->tab[var->map->i][var->map->j]) != NULL)
-				var->map->p++;
-			if (ft_strchr("C", var->map->tab[var->map->i][var->map->j]) != NULL)
-				var->map->c++;
-			if (ft_strchr("M", var->map->tab[var->map->i][var->map->j]) != NULL)
-				var->map->m++;
+			count_item(var);
 			if (var->map->e > 1 || var->map->p > 1)
 				return (ft_putstr_fd("must have only 1 E and 1 P\n", 2), 1);
 			if (parse_map(var) == 1)

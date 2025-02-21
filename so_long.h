@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:22:20 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/20 23:42:43 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:03:54 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_var
 	t_img		exit[3];
 	t_img		wall[2];
 	t_img		ennemy;
-	t_img		e_dead;;
 	t_img		santa_fight[4];
 	t_player	mapexit;
 	t_player	*pos_en;
@@ -123,14 +122,13 @@ void	init_var(t_var *var);
 void	free_img(t_var *var);
 void	free_all(t_var *var);
 void	img_new_event(int keycode, t_var *var, int x, int y);
-
-
 void	santa_anim(t_var *var, int x, int y);
-void	ennemies_anim(t_var *var);
+void	ennemies_anim(t_var *var, int i);
 void	kill_ennemy(t_var *var, int i);
 void	dead(t_var *var, size_t i);
-void	checkprntmap(t_var *var);
-void	wait_after_kill(t_var *var, int i);
+void	init_printmap(t_var *var);
+int		stock_img(t_var *var);
+char	**map_copy(t_var *var);
 
 char	*get_next_line(int fd);
 size_t	ft_strlen_line(const char *s);
