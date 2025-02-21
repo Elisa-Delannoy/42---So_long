@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:38:17 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/19 13:25:45 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 20:23:26 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	check_name(char **argv)
 	name = ft_strrchr(argv[1], '.');
 	if (name == NULL)
 		return (ft_putstr_fd("map's name must end with .ber\n", 2), 1);
-	if (ft_strncmp(".ber", name, 4) != 0)
+	printf("%s\n", name);
+	if (ft_strncmp(".ber", name, 4) != 0 || ft_strlen(name) != 4)
 		return (ft_putstr_fd("map's name must end with .ber\n", 2), 1);
 	return (0);
 }

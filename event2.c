@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/20 19:15:04 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:40:37 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 
 int	exit_game(t_var *var)
 {
-	// printf("i = %d\n", var->i_wait_dead);
-	// if (var->i_wait_dead != 5)
-	// 	dead(var, 0);
-	// else if (var->i_wait_dead == 0)
-	// {
-	free_all(var);
-	exit (0);
+	// checkprntmap(var);
+	// printf("i deqd exite%d\n", var->i_wait_dead);
+	// printf("i deqd fight%d\n", var->i_wait_fight);
+	if (var->i_wait_dead != 0 && var->i_wait_dead < 3 && var->i_wait_fight == 0)
+		dead(var, 0);
+	// else if (var->i_wait_fight != 0 && var->i_wait_fight < 3 && var->i_wait_dead == 0)
+	// 	kill_ennemy(var, 0);
+	// else if (var->i_wait_dead == 0 || var->i_wait_dead == 2 || var->i_wait_fight == 0 || var->i_wait_fight == 2 ||)
+	else
+	{
+		free_all(var);
+		exit (0);		
+	}
+	
+	// free_all(var);
+	// exit (0);
 	// }
-	// return(0);
+	return(0);
 }
 
 int	img_event_exit(t_var *var)

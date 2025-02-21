@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:22:20 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/20 19:09:54 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/20 23:42:43 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ void	santa_anim(t_var *var, int x, int y);
 void	ennemies_anim(t_var *var);
 void	kill_ennemy(t_var *var, int i);
 void	dead(t_var *var, size_t i);
-void	printmaptocheck(t_var *var);
+void	checkprntmap(t_var *var);
+void	wait_after_kill(t_var *var, int i);
 
 char	*get_next_line(int fd);
 size_t	ft_strlen_line(const char *s);

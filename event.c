@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:46:27 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/20 19:15:17 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:30:38 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ void	key(int keycode, t_var *var)
 // }
 
 
-
-
-
 int	key_hook(int keycode, t_var *var)
 {
 	t_player	p;
@@ -54,15 +51,20 @@ int	key_hook(int keycode, t_var *var)
 	p.x = var->santa.x;
 	p.y = var->santa.y;
 	
-	// var->previous_keycode = var->stock_keycode;
+	if (keycode != Q_kill)	
+		var->previous_keycode = var->stock_keycode;
+	var->i_wait_fight = 0;
 	// printmaptocheck(var);
+	checkprntmap(var);
 	var->stock_keycode = keycode;
 	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'T')
 		var->map->tab[var->santa.y / 80][var->santa.x / 80] = '0';
 	if (keycode == ESC)
 		exit_game(var);
-	if ((keycode == A_left || keycode == W_top || keycode == S_bottom
-			|| keycode == D_right))
+	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'D')
+		return (1);
+	if (keycode == A_left || keycode == W_top || keycode == S_bottom
+			|| keycode == D_right)
 	{
 
 		img_event_exit(var);

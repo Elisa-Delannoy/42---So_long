@@ -6,7 +6,7 @@
 /*   By: edelanno <edelanno@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:30:05 by edelanno          #+#    #+#             */
-/*   Updated: 2025/02/20 19:15:30 by edelanno         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:43:27 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,51 @@
 int loop_hook(t_var *var)
 {
 	var->i_loop = (var->i_loop + 1) % 10000;
-	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'D' && var->i_loop == 0)
+	// printf("i debut loop%d\n", var->i);
+	if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'W' && var->i_loop == 0)
 	{
-		if (var->i_wait_dead == 0)
-			var->i--;
+		// printf("i kill loop%d\n", var->i_wait_fight);
+		kill_ennemy(var, 0);
+		// if (var->i_wait_fight == 0)
+		// 	var->i--;
+		var->i_wait_fight++;
+	}
+	else if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'D' && var->i_loop == 0)
+	{
+		// printf("i deqd loop%d\n", var->i_wait_dead);
+		exit_game(var);
+		// if (var->i_wait_dead == 0)
+		// 	var->i--;
 		var->i_wait_dead++;
 	}
-	else
+	else if (var->map->tab[var->santa.y / 80][var->santa.x / 80] != 'D' && var->map->tab[var->santa.y / 80][var->santa.x / 80] != 'W')
 	{
+		// printf("sanat %c\n", var->map->tab[var->santa.y / 80][var->santa.x / 80]);
+		// printf("i var i%d\n", var->i );
 		if (var->i_loop == 0)
 			var->i++;
 		if (var->i > 3)
 			var->i = 0;
 		if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'T')
+		// if (var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'T' || var->stock_keycode == Q_kill || var->map->tab[var->santa.y / 80][var->santa.x / 80] == 'D')
 		{
+			// printf("i var i%d\n", var->i );
 			if (var->i > 1)
 				var->i = 0;
+			// else if (var->i != 0)
+			// 	var->i = 0;
 		}
 		santa_anim(var, var->santa.x, var->santa.y);
 		ennemies_anim(var);
 		kill_ennemy(var, 0);
+		// printf("%d\n", var->i_loop);
 	}
 	return (0);
 }
+
+
+
+// void	to_loop
 
 // int loop_hook(t_var *var)
 // {
@@ -91,6 +113,26 @@ int loop_hook(t_var *var)
 // 	}
 
 // }
+
+void	checkprntmap(t_var *var)
+{
+	int i = 0;
+	int j = 0;
+	while (var->map->tab[i])
+	{
+		while (var->map->tab[i][j])
+		{
+			printf("%c", var->map->tab[i][j]);
+			j++;
+		}
+		printf("\n");
+		j = 0;
+		i++;
+	}
+	printf("\n");
+	printf("next");
+	printf("\n");
+}
 
 int	main(int argc, char **argv)
 {
